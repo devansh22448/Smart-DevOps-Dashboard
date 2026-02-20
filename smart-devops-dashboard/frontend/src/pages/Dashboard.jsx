@@ -1,4 +1,5 @@
 import { useAuth } from "../context/AuthContext";
+import Navbar1 from "../components/Navbar1";;
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
@@ -9,6 +10,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-primary-dark">
+      <Navbar1/>
       <div className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-bold text-highlight-yellow">
