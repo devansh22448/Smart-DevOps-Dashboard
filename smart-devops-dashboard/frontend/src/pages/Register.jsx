@@ -58,7 +58,7 @@ const Register = () => {
           <div>
             <label
               htmlFor="username"
-              className="block text-sm font-medium text-text-primary mb-2"
+              className="block text-sm font-medium text-primary mb-2"
             >
               Username
             </label>
