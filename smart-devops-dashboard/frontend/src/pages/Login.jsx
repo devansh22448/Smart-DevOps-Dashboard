@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { FaEnvelope, FaLock, FaGithubAlt } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import AuthLayout from "../components/AuthLayout";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +12,8 @@ const Login = () => {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -36,20 +41,29 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-primary-dark flex items-center justify-center px-4">
-      <div className="max-w-md w-full bg-card-bg rounded-lg shadow-lg p-8">
-        <h2 className="text-3xl font-bold text-center text-highlight-yellow mb-8">
-          Smart DevOps Dashboard
-        </h2>
+    <AuthLayout>
+      <div className="text-center mb-8">
+        <h2 className="text-2xl font-bold text-[#F7F9FA]">Sign In</h2>
+        <p className="text-gray-400 mt-2 text-sm">Welcome back to DevOps Hub</p>
+      </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-text-primary mb-2"
-            >
-              Email
-            </label>
+      <form onSubmit={handleSubmit} className="space-y-5">
+        {error && (
+          <div className="auth-error">
+            <span className="error-icon">⚠</span>
+            {error}
+          </div>
+        )}
+
+        {/* Email Input */}
+        <div className="form-group">
+          <label htmlFor="email" className="form-label">
+            Email
+          </label>
+          <div className="input-wrapper">
+            <span className="input-icon">
+              <FaEnvelope />
+            </span>
             <input
               type="email"
               id="email"
@@ -57,56 +71,84 @@ const Login = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 bg-primary-dark border border-text-secondary rounded-md text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent-aqua focus:border-transparent"
-              placeholder="Enter your email"
+              className="form-input"
+              placeholder="name@company.com"
             />
           </div>
+        </div>
 
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-text-primary mb-2"
-            >
-              Password
-            </label>
+        {/* Password Input */}
+        <div className="form-group">
+          <label htmlFor="password" className="form-label">
+            Password
+          </label>
+          <div className="input-wrapper">
+            <span className="input-icon">
+              <FaLock />
+            </span>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 bg-primary-dark border border-text-secondary rounded-md text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent-aqua focus:border-transparent"
-              placeholder="Enter your password"
+              className="form-input"
+              placeholder="••••••••"
             />
-          </div>
-
-          {error && (
-            <div className="text-red-400 text-sm text-center">{error}</div>
-          )}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-accent-aqua hover:bg-soft-aqua-hover text-primary-dark font-semibold py-2 px-4 rounded-md transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {loading ? "Logging in..." : "Login"}
-          </button>
-        </form>
-
-        <div className="mt-6 text-center">
-          <p className="text-text-secondary">
-            Don't have an account?{" "}
-            <Link
-              to="/register"
-              className="text-accent-aqua hover:text-soft-aqua-hover"
+            <button
+              type="button"
+              className="password-toggle"
+              onClick={() => setShowPassword(!showPassword)}
             >
-              Register here
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
+        </div>
+
+        {/* Remember Me & Forgot Password */}
+        <div className="flex items-center justify-between">
+          <label className="checkbox-container">
+            <input
+              type="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+            />
+            <span className="checkmark"></span>
+            <span className="checkbox-label">Remember me</span>
+          </label>
+          <Link to="/forgot-password" className="forgot-link text-sm">
+            Forgot Password?
+          </Link>
+        </div>
+
+        {/* Submit Button */}
+        <button type="submit" disabled={loading} className="btn-primary">
+          {loading ? <span className="loading-spinner"></span> : "Sign In"}
+        </button>
+
+        {/* Divider */}
+        <div className="divider">
+          <span className="divider-text">or continue with</span>
+        </div>
+
+        {/* GitHub Button */}
+        <button type="button" className="btn-secondary">
+          <FaGithubAlt />
+          <span>GitHub</span>
+        </button>
+
+        {/* Footer */}
+        <div className="text-center pt-4">
+          <p className="footer-text">
+            Don't have an account?{" "}
+            <Link to="/register" className="footer-link">
+              Sign Up
             </Link>
           </p>
         </div>
-      </div>
-    </div>
+      </form>
+    </AuthLayout>
   );
 };
 
