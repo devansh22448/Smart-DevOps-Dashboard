@@ -243,7 +243,7 @@ Team Members:
 Deepika Agrawal (2315000699)
 Dev Singh (2315000699)
 Devansh Gupta (2315000714)
-Devansh Mishra (2315000716)
+Devansh Mishra (2315000720)
 Devanshi Mehrotra (2315000720)
 
 📌 Conclusion
